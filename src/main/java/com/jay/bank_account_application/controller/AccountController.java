@@ -17,6 +17,7 @@ public class AccountController {
 
     /**
      *
+     *
      */
     @Autowired
     private AccountRepository accountRepository;
@@ -39,14 +40,14 @@ public class AccountController {
     }
 
     /**
+     * @GetMapping is used to map HTTP GET requests onto specific handler methods
      * @param id is the primary key of the account
      * @return the account object
-     * @GetMapping is used to map HTTP GET requests onto specific handler methods
      * @ResponseStatus is used to return the status code 200
-     * accountRepository.findById is used to find the account object in the database
-     * account is the transfer object
-     * @PathVariable is used to bind the value of a URI template variable to a method parameter
-     * @RequestBody is used to bind the HTTP request body to a transfer or domain object
+     *  accountRepository.findById is used to find the account object in the database
+     *  account is the transfer object
+     *  @PathVariable is used to bind the value of a URI template variable to a method parameter
+     *  @RequestBody is used to bind the HTTP request body to a transfer or domain object
      */
     @GetMapping("/getuser/{id}")
     public ResponseEntity<Account> getAccount(@PathVariable("id") long id) {
@@ -91,7 +92,18 @@ public class AccountController {
         Account updatedAccount = accountRepository.save(account);
         return new ResponseEntity<>(updatedAccount, HttpStatus.OK);
     }
-}
 
+    @DeleteMapping("/deleteuser/{id}")
+    /**
+     * @DeleteMapping is used to map HTTP DELETE requests onto specific handler methods
+     * @param id is the primary key of the account
+     * @ResponseStatus is used to return the status code 200
+     * accountRepository.deleteById is used to delete the account object in the database
+     */
+    public ResponseEntity<Account> deleteAccount(@PathVariable("id") long id) {
+        accountRepository.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+}
 
 
