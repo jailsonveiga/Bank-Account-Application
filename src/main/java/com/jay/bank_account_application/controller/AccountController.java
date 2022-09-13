@@ -29,8 +29,7 @@ public class AccountController {
 
     @PostMapping("/createuser")
     /**
-     *
-     *
+     * @RequestBody is used to bind the HTTP request body to a transfer or domain object
      */
     public ResponseEntity<Account> registerAccount(@RequestBody Account newAccount) {
         Account saveAccount = accountRepository.save(newAccount);
