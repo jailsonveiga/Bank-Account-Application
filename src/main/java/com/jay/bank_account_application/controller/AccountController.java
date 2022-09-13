@@ -7,18 +7,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-/**
- *
- */
-@RestController
 
+@RestController
 @RequestMapping("/account")
 public class AccountController {
 
-    /**
-     *
-     *
-     */
     @Autowired
     private AccountRepository accountRepository;
 
@@ -114,4 +107,48 @@ public class AccountController {
         accountRepository.deleteAll();
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    //returns the user by account number
+//    @GetMapping("/getuserbyaccountnumber/{accountNumber}")
+//    public ResponseEntity<Account> getAccountByAccountNumber(@PathVariable("accountNumber") int accountNumber) {
+//        Account account = accountRepository.findByAccountNumber(accountNumber);
+//        return new ResponseEntity<>(account, HttpStatus.OK);
+//    }
+
+    //returns the user by name
+    @GetMapping("/getuserbyname/{name}")
+    public ResponseEntity<Account> getAccountByName(@PathVariable("name") String name) {
+        Account account = accountRepository.findByName(name);
+        return new ResponseEntity<>(account, HttpStatus.OK);
+    }
+
+    //returns the user by balance
+    @GetMapping("/getuserbybalance/{balance}")
+    public ResponseEntity<Account> getAccountByBalance(@PathVariable("balance") double balance) {
+        Account account = accountRepository.findByBalance(balance);
+        return new ResponseEntity<>(account, HttpStatus.OK);
+    }
+
+    // returns the user by age
+    @GetMapping("/getuserbyage/{age}")
+    public ResponseEntity<Account> getAccountByAge(@PathVariable("age") int age) {
+        Account account = accountRepository.findByAge(age);
+        return new ResponseEntity<>(account, HttpStatus.OK);
+    }
+
+    // returns the user balance by two values
+//    @GetMapping("/getuserbybalancebetween/{balance1}/{balance2}")
+//    public ResponseEntity<Iterable<Account>> getAccountByBalanceBetween(@PathVariable("balance1") double balance1, @PathVariable("balance2") double balance2) {
+//        Iterable<Account> accounts = (Iterable<Account>) accountRepository.findByBalanceBetween(balance1, balance2);
+//        return new ResponseEntity<>(accounts, HttpStatus.OK);
+//    }
+
+    // return a method to find the highest balance in user account
+    @GetMapping("/getuserbybalancehighest")
+    public ResponseEntity<Account> getAccountByBalanceHighest() {
+        Account account = accountRepository.findTopByOrderByBalanceDesc();
+        return new ResponseEntity<>(account, HttpStatus.OK);
+    }
+
+
 }
