@@ -77,9 +77,21 @@ public class AccountController {
          */
         return new ResponseEntity<>(accounts, HttpStatus.OK);
     }
+
+    @PutMapping("/updateuser")
+    /**
+     * @PutMapping is used to map HTTP PUT requests onto specific handler methods
+     * @param account is the domain object
+     * @return the account object
+     * @ResponseStatus is used to return the status code 200
+     * accountRepository.save is used to save the account object in the database
+     * account is the transfer object
+     */
+    public ResponseEntity<Account> updateAccount(@RequestBody Account account) {
+        Account updatedAccount = accountRepository.save(account);
+        return new ResponseEntity<>(updatedAccount, HttpStatus.OK);
+    }
 }
-
-
 
 
 
