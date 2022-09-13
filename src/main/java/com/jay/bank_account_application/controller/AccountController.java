@@ -104,6 +104,15 @@ public class AccountController {
         accountRepository.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @DeleteMapping("/deleteallusers")
+    /**
+     * @DeleteMapping is used to map HTTP DELETE requests onto specific handler methods
+     * @ResponseStatus is used to return the status code 200
+     * accountRepository.deleteAll is used to delete all the account objects in the database
+     */
+    public ResponseEntity<Account> deleteAllAccounts() {
+        accountRepository.deleteAll();
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
-
-
