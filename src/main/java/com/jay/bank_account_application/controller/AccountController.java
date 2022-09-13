@@ -1,0 +1,85 @@
+package com.jay.bank_account_application.controller;
+
+import com.jay.bank_account_application.model.Account;
+import com.jay.bank_account_application.repository.AccountRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+/**
+ *
+ */
+@RestController
+
+@RequestMapping("/account")
+public class AccountController {
+
+    /**
+     *
+     */
+    @Autowired
+    private AccountRepository accountRepository;
+
+    // C - Create - POST - @PostMapping
+    // R - Read - GET - GetMapping
+    // U - Update - PUT @PutMapping
+    // D - Delete - DELETE - @DeleteMapping
+
+    @PostMapping("/createuser")
+    /**
+     *
+     *
+     */
+    public ResponseEntity<Account> registerAccount(@RequestBody Account newAccount) {
+        Account saveAccount = accountRepository.save(newAccount);
+
+        return new ResponseEntity<>(saveAccount, HttpStatus.CREATED);
+
+    }
+
+    /**
+     * @param id is the primary key of the account
+     * @return the account object
+     * @GetMapping is used to map HTTP GET requests onto specific handler methods
+     * @ResponseStatus is used to return the status code 200
+     * accountRepository.findById is used to find the account object in the database
+     * account is the transfer object
+     * @PathVariable is used to bind the value of a URI template variable to a method parameter
+     * @RequestBody is used to bind the HTTP request body to a transfer or domain object
+     */
+    @GetMapping("/getuser/{id}")
+    public ResponseEntity<Account> getAccount(@PathVariable("id") long id) {
+        Account account = accountRepository.findById(id).get();
+        return new ResponseEntity<>(account, HttpStatus.OK);
+    }
+
+
+    @GetMapping("/getallusers")
+    /**
+     * @GetMapping is used to map HTTP GET requests onto specific handler methods
+     * @return the list of account objects
+     * @ResponseStatus is used to return the status code 200
+     * accountRepository.findAll is used to find all the account objects in the database
+     * accountList is the transfer object
+     */
+    public ResponseEntity<Iterable<Account>> getAllAccounts() {
+        /**
+         * Iterable is an interface that represents a group of objects, of the same type, that can be iterated over.
+         * Iterable is the parent interface of List, Set, and Queue.
+         * Iterable is implemented by the classes ArrayList, LinkedList, HashSet, TreeSet, PriorityQueue, and ArrayDeque.
+         */
+        Iterable<Account> accounts = accountRepository.findAll();
+        /**
+         * ResponseEntity is used to return a response entity
+         * HttpStatus.OK is used to return the status code 200
+         * accounts is the transfer object
+         */
+        return new ResponseEntity<>(accounts, HttpStatus.OK);
+    }
+}
+
+
+
+
+
