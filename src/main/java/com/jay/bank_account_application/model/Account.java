@@ -13,16 +13,41 @@ public class Account {
     private int age;
     private int accountNumber;
     private double balance;
+    private double deposit;
+    private double withdraw;
+
+    // get the max balance of the user
+    public double getMaxBalance() {
+        return balance;
+    }
 
     public Account() {
     }
 
-    public Account(String name, int age, int accountNumber, double balance, int id) {
+    public Account(String name, int age, int accountNumber, double balance, int id, double deposit, double withdraw) {
         this.id = id;
         this.name = name;
         this.age = age;
         this.accountNumber = accountNumber;
         this.balance = balance;
+        this.deposit = deposit;
+        this.withdraw = withdraw;
+    }
+
+    public double getDeposit() {
+        return deposit;
+    }
+
+    public void setDeposit(double deposit) {
+        this.deposit = deposit;
+    }
+
+    public double getWithdraw() {
+        return withdraw;
+    }
+
+    public void setWithdraw(double withdraw) {
+        this.withdraw = withdraw;
     }
 
     public long getId() {
