@@ -32,14 +32,14 @@ public class AccountController {
     }
 
     /**
-     * @GetMapping is used to map HTTP GET requests onto specific handler methods
      * @param id is the primary key of the account
      * @return the account object
+     * @GetMapping is used to map HTTP GET requests onto specific handler methods
      * @ResponseStatus is used to return the status code 200
-     *  accountRepository.findById is used to find the account object in the database
-     *  account is the transfer object
-     *  @PathVariable is used to bind the value of a URI template variable to a method parameter
-     *  @RequestBody is used to bind the HTTP request body to a transfer or domain object
+     * accountRepository.findById is used to find the account object in the database
+     * account is the transfer object
+     * @PathVariable is used to bind the value of a URI template variable to a method parameter
+     * @RequestBody is used to bind the HTTP request body to a transfer or domain object
      */
     @GetMapping("/getuser/{id}")
     public ResponseEntity<Account> getAccount(@PathVariable("id") long id) {
@@ -136,19 +136,44 @@ public class AccountController {
         return new ResponseEntity<>(account, HttpStatus.OK);
     }
 
-    // returns the user balance by two values
-//    @GetMapping("/getuserbybalancebetween/{balance1}/{balance2}")
-//    public ResponseEntity<Iterable<Account>> getAccountByBalanceBetween(@PathVariable("balance1") double balance1, @PathVariable("balance2") double balance2) {
-//        Iterable<Account> accounts = (Iterable<Account>) accountRepository.findByBalanceBetween(balance1, balance2);
-//        return new ResponseEntity<>(accounts, HttpStatus.OK);
-//    }
-
-    // return a method to find the highest balance in user account
-    @GetMapping("/getuserbybalancehighest")
-    public ResponseEntity<Account> getAccountByBalanceHighest() {
-        Account account = accountRepository.findTopByOrderByBalanceDesc();
+    // search ba account number
+    @GetMapping("/searchbyaccountnumber/{accountNumber}")
+    public ResponseEntity<Account> searchByAccountNumber(@PathVariable("accountNumber") int accountNumber) {
+        Account account = accountRepository.searchByAccountNumber(accountNumber);
         return new ResponseEntity<>(account, HttpStatus.OK);
     }
 
+    // create a method to find all account by account number
+    @GetMapping("/findallbyaccountnumber/{accountNumber}")
+    public ResponseEntity<Iterable<Account>> findAllByAccountNumber(@PathVariable("accountNumber") int accountNumber) {
+        Iterable<Account> accounts = accountRepository.findAllByAccountNumber(accountNumber);
+        return new ResponseEntity<>(accounts, HttpStatus.OK);
+    }
 
+    // create a forloop to get the minbalace of the user and return the user name
+    @GetMapping("/getminbalance")
+    public ResponseEntity<Account> getMinBalance() {
+        Iterable<Account> accounts = accountRepository.findAll();
+        double minBalance = 0;
+        for (Account account : accounts) {
+            if (account.getBalance() < minBalance) {
+                minBalance = account.getBalance();
+            }
+        }
+        return new ResponseEntity( minBalance, HttpStatus.OK);
+    }
+
+    // create a forloop to get the maxbalace of the user and return the username
+    @GetMapping("/getmaxbalance")
+    public ResponseEntity<Account> getMaxBalance() {
+        Iterable<Account> accounts = accountRepository.findAll();
+        double maxBalance = 0;
+        for (Account account : accounts) {
+            if (account.getBalance() > maxBalance) {
+                maxBalance = account.getBalance();
+            }
+        }
+        return new ResponseEntity( maxBalance,  HttpStatus.OK);
+    }
 }
+
