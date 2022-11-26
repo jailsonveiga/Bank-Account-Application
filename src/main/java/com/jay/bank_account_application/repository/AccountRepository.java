@@ -3,6 +3,8 @@ package com.jay.bank_account_application.repository;
 import com.jay.bank_account_application.model.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 public interface AccountRepository extends JpaRepository<Account, Long>{
 
     // create a method to find account by account number
@@ -20,8 +22,8 @@ public interface AccountRepository extends JpaRepository<Account, Long>{
     // create a method to find account by age
     Account findByAge(int age);
 
-    // create a method to find the highest balance in user account
-    Account findTopByOrderByBalanceDesc();
+    Account searchByAccountNumber(int accountNumber);
 
-
+    // create a method to find all account by account number
+    List<Account> findAllByAccountNumber(int accountNumber);
 }
